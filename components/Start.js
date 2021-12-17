@@ -13,7 +13,7 @@ export default class Start extends React.Component {
 
   state = {
     name: '',
-    bgImg: '',
+    bgImg: start_bg,
   };
 
   setBgImage = (img) => {
@@ -24,7 +24,7 @@ export default class Start extends React.Component {
     return (
       <View style={{flex:1, justifyContent: 'center', alignItems: 'center'}}>
         <ImageBackground
-          source={start_bg}
+          source={this.state.bgImg}
           resizeMode='cover'
           style={styles.bgImg}
         >
@@ -49,16 +49,16 @@ export default class Start extends React.Component {
             <View style={styles.bg_box}>
               <Text>Choose Background Color</Text>
               <View style={styles.pickColor}>
-                <TouchableOpacity onPress={() => this.setBgImage(this.state.start_bg)}>
+                <TouchableOpacity onPress={() => this.setBgImage(start_bg)}>
                   <View style={styles.color1}></View>
                 </TouchableOpacity>
-                <TouchableOpacity onPress={() => this.setBgImage(this.state.blue)}>
+                <TouchableOpacity onPress={() => this.setBgImage(blue)}>
                   <View style={styles.color2}></View>
                 </TouchableOpacity>
-                <TouchableOpacity onPress={() => this.setBgImage(this.state.purple)}>
+                <TouchableOpacity onPress={() => this.setBgImage(purple)}>
                   <View style={styles.color3}></View>
                 </TouchableOpacity>
-                <TouchableOpacity onPress={() => this.setBgImage(this.state.green)}>
+                <TouchableOpacity onPress={() => this.setBgImage(green)}>
                   <View style={styles.color4}></View>
                 </TouchableOpacity>
               </View>
