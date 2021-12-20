@@ -3,11 +3,12 @@ import { View, Text, Button, StyleSheet } from 'react-native';
 import { ImageBackground } from 'react-native-web';
 
 export default class Chat extends React.Component {
-
+  
   render() {
-    let name = this.props.route.params.user;
-    const { bgImg } = this.props.route.params;
+    let { name } = this.props.route.params;
     this.props.navigation.setOptions({ title: name });
+
+    const { bgImg } = this.props.route.params;
 
     return (
       <View style={styles.container}>
