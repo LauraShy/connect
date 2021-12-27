@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, Button, StyleSheet } from 'react-native';
+import { View, Text, Button, StyleSheet, Platform, KeyboardAvoidingView } from 'react-native';
 import { ImageBackground } from 'react-native-web';
 import { GiftedChat } from 'react-native-gifted-chat'
 
@@ -27,6 +27,10 @@ export default class Chat extends React.Component {
         },
       ],
     })
+
+    // sets the page title and adds users name to the nav 
+    let { name } = this.props.route.params;
+    this.props.navigation.setOptions({ title: name });
   }
 
   // callback function for when user sends a message
@@ -37,11 +41,6 @@ export default class Chat extends React.Component {
   }
 
   render() {
-    
-    // sets the page title and adds users name to the nav 
-    let { name } = this.props.route.params;
-    this.props.navigation.setOptions({ title: name });
-
     // pulls background image selection from Start screen
     const { bgImg } = this.props.route.params;
 
@@ -61,6 +60,7 @@ export default class Chat extends React.Component {
               />
             </View>
         </ImageBackground>
+        { Platform.OS === 'android' ? <KeyboardAvoidingView behavior="height" /> : null }
       </View>
     );
   }
@@ -69,16 +69,16 @@ export default class Chat extends React.Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    width: "100%",
-    flexDirection: "column",
-    alignItems: "center",
+    width: '100%',
+    flexDirection: 'column',
+    alignItems: 'center',
     justifyContent: 'center',
   },
   bgImg: {
     flex: 1,
-    width: "100%",
-    flexDirection: "column",
-    alignItems: "center",
+    width: '100%',
+    flexDirection: 'column',
+    alignItems: 'center',
     justifyContent: 'center',
   }
 });

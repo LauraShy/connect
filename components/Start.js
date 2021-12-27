@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, Button, ImageBackground, Image, StyleSheet } from 'react-native';
+import { View, Text, Button, ImageBackground, Image, StyleSheet, Platform, KeyboardAvoidingView } from 'react-native';
 import { TextInput, TouchableOpacity } from "react-native-gesture-handler";
 import Icon from "react-native-vector-icons/FontAwesome";
 
@@ -81,9 +81,9 @@ export default class Start extends React.Component {
 const styles = StyleSheet.create({
   bgImg: {
     flex: 1,
-    width: "100%",
-    flexDirection: "column",
-    alignItems: "center",
+    width: '100%',
+    flexDirection: 'column',
+    alignItems: 'center',
   },
   connect_logo: {
     flex: .6,
@@ -97,15 +97,15 @@ const styles = StyleSheet.create({
     marginRight: 15,
     height: 25,
     width: 25,
-    alignItems: "center",
+    alignItems: 'center',
   },
   input_box: {
     flexDirection: 'row',
     flex: 1,
-    alignItems: "center",
-    backgroundColor: "#fff",
+    alignItems: 'center',
+    backgroundColor: '#fff',
     borderWidth: 0.5,
-    borderColor: "#000",
+    borderColor: '#000',
     maxHeight: 50,
     borderRadius: 10,
     marginHorizontal: 10,
