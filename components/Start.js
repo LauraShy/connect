@@ -46,6 +46,8 @@ export default class Start extends React.Component {
                 placeholder=' Enter your name...'
               />
             </View>
+
+            {/* select a background image */}
             <View style={styles.bg_box}>
               <Text>Choose Background Color</Text>
               <View style={styles.pickColor}>
@@ -62,16 +64,17 @@ export default class Start extends React.Component {
                   <View style={styles.color4}></View>
                 </TouchableOpacity>
               </View>
+              {/* navigate to chat screen */}
               <Button 
-              color='black'
-              title="Start Connecting"
-              onPress={() => this.props.navigation.navigate('Chat', {
-                name: this.state.name,
-                bgImg: this.state.bgImg,
-              })}
-            />
+                color='black'
+                title="Start Connecting"
+                onPress={() => this.props.navigation.navigate('Chat', {
+                  name: this.state.name,
+                  bgImg: this.state.bgImg,
+                })}
+              />
             </View>
-            </View>
+          </View>
         </ImageBackground>
       </View>
     );
