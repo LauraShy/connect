@@ -13,6 +13,10 @@ export default class Chat extends React.Component {
   }
 
   componentDidMount() {
+    // sets the page title and adds users name to the nav 
+    let { name } = this.props.route.params;
+    this.props.navigation.setOptions({ title: name });
+    
     this.setState({
       messages: [
         {
@@ -27,17 +31,13 @@ export default class Chat extends React.Component {
         },
         {
           _id: 2,
-          text: 'This is a system message',
+          text: name + ' has joined the chat',
           color: 'black',
           createdAt: new Date(),
           system: true,
         },
       ],
     })
-
-    // sets the page title and adds users name to the nav 
-    let { name } = this.props.route.params;
-    this.props.navigation.setOptions({ title: name });
   }
 
   // callback function for when user sends a message
@@ -46,7 +46,7 @@ export default class Chat extends React.Component {
       messages: GiftedChat.append(previousState.messages, messages),
     }))
   }
-  
+
   renderBubble(props) {
     return (
       <Bubble
