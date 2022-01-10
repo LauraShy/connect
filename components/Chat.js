@@ -1,11 +1,9 @@
 import React from 'react';
-import { initializeApp } from 'firebase/app';
 import { View, Text, Button, StyleSheet, Platform, KeyboardAvoidingView } from 'react-native';
 import { ImageBackground } from 'react-native-web';
 import { Bubble, GiftedChat, SystemMessage } from 'react-native-gifted-chat';
 
-const firebase = require('firebase');
-const app = initializeApp(firebaseConfig);
+const firebase = require('firebase').default;
 
 // firebase configuration for chat
 const firebaseConfig = {
@@ -48,6 +46,7 @@ export default class Chat extends React.Component {
     this.authUnsubscribe = firebase.auth().onAuthStateChanged(async (user) => {
       if (!user) {
         firebase.auth().signInAnonymously();
+        return
       }
       // update user state with currently active user data
       this.setState({
