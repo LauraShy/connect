@@ -1,13 +1,11 @@
 import React from 'react';
 import { initializeApp } from 'firebase/app';
-import { getAnalytics } from 'firebase/analytics';
 import { View, Text, Button, StyleSheet, Platform, KeyboardAvoidingView } from 'react-native';
 import { ImageBackground } from 'react-native-web';
 import { Bubble, GiftedChat, SystemMessage } from 'react-native-gifted-chat';
 
 const firebase = require('firebase');
 const app = initializeApp(firebaseConfig);
-//const analytics = getAnalytics(app);
 
 // firebase configuration for chat
 const firebaseConfig = {
@@ -16,8 +14,7 @@ const firebaseConfig = {
   projectId: "connect-app-5b29f",
   storageBucket: "connect-app-5b29f.appspot.com",
   messagingSenderId: "674826866650",
-  appId: "1:674826866650:web:3f4d7f85b4dc73ab187ae3",
-  measurementId: "G-47XPK2XQR6"
+  appId: "1:674826866650:web:de489391c9b2fad8187ae3"
 };
 
 export default class Chat extends React.Component {
