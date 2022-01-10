@@ -72,6 +72,12 @@ export default class Chat extends React.Component {
     });
   }
 
+  // stop listening to auth and collection changes
+  componentWillUnmount() {
+		this.authUnsubscribe();
+		this.unsubscribe();
+	}
+
   // stores and adds new messages to database
   addMessage() {
     const message = this.state.messages[0];
