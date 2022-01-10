@@ -110,6 +110,9 @@ export default class Chat extends React.Component {
         user: data.user,
       });
     });
+    this.setState({
+      messages: messages
+    });
   }
 
   renderBubble(props) {
