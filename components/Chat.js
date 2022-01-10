@@ -5,6 +5,7 @@ import { View, Text, Button, StyleSheet, Platform, KeyboardAvoidingView } from '
 import { ImageBackground } from 'react-native-web';
 import { Bubble, GiftedChat, SystemMessage } from 'react-native-gifted-chat';
 
+const firebase = require('firebase');
 const app = initializeApp(firebaseConfig);
 //const analytics = getAnalytics(app);
 
@@ -25,7 +26,12 @@ export default class Chat extends React.Component {
     super(props);
     this.state = {
       messages: [],
+      uid: 0,
       loggedInText: 'Logging in...',
+      user: {
+        _id: '',
+        name: '',
+      }
     };
     // initializing firebase
     if (!firebase.apps.length){
@@ -140,7 +146,7 @@ export default class Chat extends React.Component {
               />
           </View>  
         </ImageBackground>
-        { Platform.OS === 'android' ? <KeyboardAvoidingView behavior="height" /> : null }
+        { Platform.OS === 'android' ? <KeyboardAvoidingView behavior='height' /> : null }
       </View>
     );
   }
