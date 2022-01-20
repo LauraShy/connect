@@ -21,15 +21,6 @@ export default class Chat extends React.Component {
   
   constructor(props) {
     super(props);
-    this.state = {
-      messages: [],
-      uid: 0,
-      loggedInText: 'Logging in...',
-      user: {
-        _id: '',
-        name: '',
-      }
-    };
     // initializing firebase
     if (!firebase.apps.length){
       firebase.initializeApp(firebaseConfig);
@@ -37,6 +28,18 @@ export default class Chat extends React.Component {
 
     // reference to firebase messages collection
     this.referenceChatMessages = firebase.firestore().collection('messages');
+    this.referenceMessageUser = null;
+    
+    this.state = {
+      messages: [],
+      uid: 0,
+      loggedInText: 'Logging in...',
+      user: {
+        _id: '',
+        name: '',
+      },
+      isConnected: false,
+    };
   }
 
   // load messages from local AsyncStorage
@@ -72,45 +75,6 @@ export default class Chat extends React.Component {
       console.log(error.message);
     }
   };
-
-  componentDidMount() {
-    // sets the page title and adds users name to the nav 
-    let { name } = this.props.route.params;
-    this.props.navigation.setOptions({ title: name });
-    
-    NetInfo.fetch().then(connection => {
-      if (connection.isConnected) {
-        this.setState({ isConnected: true });
-        console.log('online');
-
-        this.authUnsubscribe = firebase.auth().onAuthStateChanged(async (user) => {
-          if (!user) {
-            firebase.auth().signInAnonymously();
-            return
-          }
-          // update user state with currently active user data
-          this.setState({
-            uid: user.uid,
-            messages: [],
-            user: {
-              _id: user.uid,
-              name: name,
-            },
-          });
-          // create reference to active user's messages
-          this.referenceMessagesUser = firebase.firestore().collection('messages').where('uid', '==', this.state.uid);
-          // listen for collection updates
-          this.unsubscribe = this.referenceChatMessages.orderBy('createdAt', 'desc').onSnapshot(this.onCollectionUpdate);
-        });
-        
-      } else {
-        console.log('offline');
-        this.setState({ isConnected: false })
-        // calls messeages from offline storage
-        this.getMessages();
-      }
-    });
-  }
 
   // stores and adds new messages to database
   addMessage() {
@@ -151,6 +115,45 @@ export default class Chat extends React.Component {
     });
     this.setState({
       messages: messages
+    });
+  }
+
+  componentDidMount() {
+    // sets the page title and adds users name to the nav 
+    let { name } = this.props.route.params;
+    this.props.navigation.setOptions({ title: name });
+    
+    NetInfo.fetch().then(connection => {
+      if (connection.isConnected) {
+        this.setState({ isConnected: true });
+        console.log('online');
+
+        this.authUnsubscribe = firebase.auth().onAuthStateChanged(async (user) => {
+          if (!user) {
+            firebase.auth().signInAnonymously();
+            return
+          }
+          // update user state with currently active user data
+          this.setState({
+            uid: user.uid,
+            messages: [],
+            user: {
+              _id: user.uid,
+              name: name,
+            },
+          });
+          // create reference to active user's messages
+          this.referenceMessagesUser = firebase.firestore().collection('messages').where('uid', '==', this.state.uid);
+          // listen for collection updates
+          this.unsubscribe = this.referenceChatMessages.orderBy('createdAt', 'desc').onSnapshot(this.onCollectionUpdate);
+        });
+        
+      } else {
+        console.log('offline');
+        this.setState({ isConnected: false })
+        // calls messeages from offline storage
+        this.getMessages();
+      }
     });
   }
 
