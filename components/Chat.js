@@ -5,6 +5,8 @@ import { View, Text, Button, StyleSheet, Platform, KeyboardAvoidingView } from '
 import { ImageBackground } from 'react-native-web';
 import { Bubble, GiftedChat, InputToolbar, SystemMessage } from 'react-native-gifted-chat';
 
+import CustomActions from './CustomActions';
+
 const firebase = require('firebase').default;
 
 // firebase configuration for chat
@@ -39,6 +41,8 @@ export default class Chat extends React.Component {
         name: '',
       },
       isConnected: false,
+      image: null,
+      location: null
     };
   }
 
@@ -85,6 +89,8 @@ export default class Chat extends React.Component {
       text: message.text,
       createdAt: message.createdAt,
       user: message.user,
+      image: message.image || null,
+      location: message.location || null,
     });
   }
 
@@ -111,6 +117,8 @@ export default class Chat extends React.Component {
         _id: data._id,
         text: data.text,
         createdAt: data.createdAt.toDate(),
+        image: data.image || null,
+        location: data.location || null,
         user: data.user,
       });
     });
@@ -183,10 +191,33 @@ export default class Chat extends React.Component {
 
   renderInputToolbar(props) {
     if (this.state.isConnected === false) {
-      return <div>You are offline</div>
+      return <p>You are offline</p>
     } else {
       return <InputToolbar {...props} />;
     }
+  }
+
+  renderCustomActions = (props) => {
+    return <CustomActions {...props} />;
+  };
+
+  // Renders Custom map view
+  renderCustomView(props) {
+    const { currentMessage } = props;
+    if (currentMessage.location) {
+      return (
+        <MapView
+          style={{ width: 150, height: 100, borderRadius: 13, margin: 3 }}
+          region={{
+            latitude: currentMessage.location.latitude,
+            longitude: currentMessage.location.longitude,
+            latitudeDelta: 0.922,
+            longitudeDelta: 0.0421,
+          }}
+        />
+      );
+    }
+    return null;
   }
 
   render() {
@@ -202,6 +233,7 @@ export default class Chat extends React.Component {
           <View style={styles.chat}>  
               <GiftedChat
                 renderInputToolbar={this.renderInputToolbar.bind(this)}
+                renderActions={this.renderCustomActions}
                 renderBubble={this.renderBubble.bind(this)}
                 messages={this.state.messages}
                 onSend={messages => this.onSend(messages)}
