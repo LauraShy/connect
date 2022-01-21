@@ -95,6 +95,7 @@ export default class Chat extends React.Component {
         messages: GiftedChat.append(previousState.messages, messages),
       }), () => {
         this.saveMessages();
+        this.addMessage();
       }
     );
   }
@@ -181,7 +182,8 @@ export default class Chat extends React.Component {
   }
 
   renderInputToolbar(props) {
-    if (this.state.isConnected == false) {
+    if (this.state.isConnected === false) {
+      return <div>You are offline</div>
     } else {
       return <InputToolbar {...props} />;
     }
@@ -199,6 +201,7 @@ export default class Chat extends React.Component {
           style={styles.bgImg}>
           <View style={styles.chat}>  
               <GiftedChat
+                renderInputToolbar={this.renderInputToolbar.bind(this)}
                 renderBubble={this.renderBubble.bind(this)}
                 messages={this.state.messages}
                 onSend={messages => this.onSend(messages)}
