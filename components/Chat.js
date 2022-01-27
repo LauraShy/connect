@@ -160,7 +160,7 @@ export default class Chat extends React.Component {
       } else {
         console.log('offline');
         this.setState({ isConnected: false })
-        // calls messeages from offline storage
+        // calls messages from offline storage
         this.getMessages();
       }
     });
@@ -191,7 +191,7 @@ export default class Chat extends React.Component {
 
   renderInputToolbar(props) {
     if (this.state.isConnected === false) {
-      return <p>You are offline</p>
+      return <div>You are offline</div>
     } else {
       return <InputToolbar {...props} />;
     }
